@@ -27,3 +27,4 @@ class Problem():
         return ()
     def getActionCost(self,state,action):
         return 0
+
