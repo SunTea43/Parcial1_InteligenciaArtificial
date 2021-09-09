@@ -24,12 +24,12 @@ class Problem():
 
     def expand(self, state):
         childs = []
-        print("Evaluo")
+        #print("Evaluo")
         for action in self.getActions(state):
             new_node = self.transition(state, action)
             cost = self.getActionCost(state, action)
             childs.append((new_node, action, cost))
-            print("Action: ",action, "--> " ,new_node,cost)
+            #print("Action: ",action, "--> " ,new_node,cost)
         return childs
 
     def getActions(self, state = None):
@@ -73,11 +73,13 @@ def search(problem):
     while frontier:
         current_state, path, cost = frontier.pop()
         if problem.isGoal(current_state):
-            return path
+            return ((path,cost))
         if current_state not in explored:
             explored.append(current_state)
         for new_state, action, new_cost in problem.expand(current_state):
             frontier.push((new_state, path + [action], new_cost + cost))
     return None
 
+print("Estado inicial: ", INITIAL_STATE)
+print("Estado deseado: ", DESIRED_STATE)
 print(search(Problem(INITIAL_STATE, DESIRED_STATE)))
