@@ -1,6 +1,6 @@
 # A simple implementation of Priority Queue
 # using Queue.
-class PriorityQueue(object):
+class PriorityQueue():
     """
     Class of Priority Queue's structure
 
@@ -25,7 +25,7 @@ class PriorityQueue(object):
         """
         Definition that pop an element from the queue
         
-        It considers that the elements are saved as (state, action, cost)
+        It considers that the elements are saved as (state, actions, cost)
 
         The priority is determined by the lower cost. 
         """
