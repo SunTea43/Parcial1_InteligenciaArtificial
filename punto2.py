@@ -11,7 +11,7 @@
     la menor cantidad de puntos posibles.
 """ 
 from PriorityQueue import PriorityQueue
-INITIAL_STATE= '4231' #[1,2,4,3]
+INITIAL_STATE= '4321' #[1,2,4,3]
 DESIRED_STATE= '1234' #[1,2,3,4]
 
 class Problem():
@@ -82,4 +82,15 @@ def search(problem):
 
 print("Estado inicial: ", INITIAL_STATE)
 print("Estado deseado: ", DESIRED_STATE)
-print(search(Problem(INITIAL_STATE, DESIRED_STATE)))
+problem = Problem(INITIAL_STATE, DESIRED_STATE)
+result=search(problem)
+print(result)
+
+absolute_path,cost=result
+print(INITIAL_STATE)
+previous_state=INITIAL_STATE
+for action in absolute_path:
+    new_state=problem.transition(previous_state,action)
+    print(new_state)
+    previous_state=new_state
+
