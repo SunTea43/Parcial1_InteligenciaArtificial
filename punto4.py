@@ -13,6 +13,7 @@ tal como está y disminuir la actual coordenada en y en una unidad. A continuaci
 de un posible laberinto
 """
 import random 
+from PriorityQueue import Stack,Queue
 
 def generateObstacles(number=5):
     tuples=[]
@@ -40,23 +41,23 @@ class Problem():
         #Obtener los movimientos S segun el estado A
         actions = [(-1,1),(0,1),(1,1),(1,0),(1,-1),(0,-1),(-1,-1),(-1,0)]
         allow_action = []
-        new_c = (c[0]+action[0],c[1]+action[1])
         for action in actions :
             dx,dy = action
             nx,ny = state[0]+dx,state[1]+dy
             new_State =(nx,ny)
-            if new_State not in self.obstaculos and not new_State >= (len(self.tablero[0]),len(self.tablero[0]) and nx >= 0 and ny >= 0) :
-                allow_action.append(new_State)
+            if (new_State not in self.obstaculos and nx < len(self.tablero[0]) and ny < len(self.tablero[0]) and nx >= 0 and ny >= 0) :
+                allow_action.append((dx,dy))
         return allow_action
     def expand(self, state):
         childs = []
-        actions = getActions()
+        actions = self.getActions(state)
         for action in actions:
             new_c = self.transition(state,action)
             childs.append((new_c, action))
         return childs
     def transition(self,state,action):
         new_state = (state[0]+action[0],state[1]+action[1])
+        return new_state
 
 maze = []
 obsList = []
@@ -65,7 +66,7 @@ for i in range (6):
     for j in range (6):
         maze[i].append((i,j))
 
-obsList = generateObstacles(5)
+obsList = generateObstacles(7)
 
 def search(problem,frontier):
     initialState = problem.initialState
@@ -83,5 +84,5 @@ def search(problem,frontier):
                 frontier.push((new_state, path + [action]))
     return None
 
-problema = Problem((5,4),(0,0),obsList,maze)
-search(problem,)
+problema = Problem((5,5),(0,0),obsList,maze)
+print(search(problema,Queue()))
