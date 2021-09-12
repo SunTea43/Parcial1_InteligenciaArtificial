@@ -27,16 +27,61 @@ def generateObstacles(number=5):
         else:
             i-=1
     return tuples
-print(generateObstacles())
 
 class Problem():
-    def __init__(self,initialState,desiredState):
+    def __init__(self,initialState,desiredState,obstaculos,tablero):
         self.initialState = initialState
         self.desiredState = desiredState
+        self.obstaculos = obstaculos
+        self.tablero = tablero
     def isGoal(self,state):
         return state==self.desiredState
-    def getActions(self, state):
-        return []
-    def getNextState(self,state,action):
-        return ()
-    
+    def getActions(self,state):
+        #Obtener los movimientos S segun el estado A
+        actions = [(-1,1),(0,1),(1,1),(1,0),(1,-1),(0,-1),(-1,-1),(-1,0)]
+        allow_action = []
+        new_c = (c[0]+action[0],c[1]+action[1])
+        for action in actions :
+            dx,dy = action
+            nx,ny = state[0]+dx,state[1]+dy
+            new_State =(nx,ny)
+            if new_State not in self.obstaculos and not new_State >= (len(self.tablero[0]),len(self.tablero[0]) and nx >= 0 and ny >= 0) :
+                allow_action.append(new_State)
+        return allow_action
+    def expand(self, state):
+        childs = []
+        actions = getActions()
+        for action in actions:
+            new_c = self.transition(state,action)
+            childs.append((new_c, action))
+        return childs
+    def transition(self,state,action):
+        new_state = (state[0]+action[0],state[1]+action[1])
+
+maze = []
+obsList = []
+for i in range (6):
+    maze.append([])
+    for j in range (6):
+        maze[i].append((i,j))
+
+obsList = generateObstacles(5)
+
+def search(problem,frontier):
+    initialState = problem.initialState
+    root = (initialState, [])  
+    frontier.push(root)
+    explored = []
+
+    while not frontier.isEmpty():
+        current_state, path = frontier.pop()
+        if problem.isGoal(current_state):
+            return path        
+        if current_state not in explored:
+            explored.append(current_state)
+            for new_state,action in problem.expand(current_state):
+                frontier.push((new_state, path + [action]))
+    return None
+
+problema = Problem((5,4),(0,0),obsList,maze)
+search(problem,)

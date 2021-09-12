@@ -76,8 +76,8 @@ def search(problem):
             return ((path,cost))
         if current_state not in explored:
             explored.append(current_state)
-        for new_state, action, new_cost in problem.expand(current_state):
-            frontier.push((new_state, path + [action], new_cost + cost))
+            for new_state, action, new_cost in problem.expand(current_state):
+                frontier.push((new_state, path + [action], new_cost + cost))
     return None
 
 print("Estado inicial: ", INITIAL_STATE)
